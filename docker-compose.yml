@@ -1,0 +1,40 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    ports:
+      - 5672:5672
+      - 15672:15672
+    networks:
+      - sandbox-network
+
+  producer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8081:8080
+    image: vsanyc/rabbitmq-sandbox:0.1
+    environment:
+      CONNECTION_TYPE: producer
+      APPLICATION_ID: producer-1
+      SPRING_RABBITMQ_HOST: rabbitmq
+    networks:
+      - sandbox-network
+
+  consumer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8082:8080
+    image: vsanyc/rabbitmq-sandbox:0.1
+    environment:
+      CONNECTION_TYPE: consumer
+      APPLICATION_ID: consumer-1
+      SPRING_RABBITMQ_HOST: rabbitmq
+    networks:
+      - sandbox-network
+
+networks:
+  sandbox-network:
+    driver: bridge
