@@ -25,4 +25,11 @@ public class RabbitMqService {
             rabbitMqProducer.sendMessage(MESSAGE_TEMPLATE + i);
         }
     }
+
+    public void sendConfiguredMessages(Integer count) {
+        log.info("Send configured {} messages like {}", count, MESSAGE_TEMPLATE);
+        for(int i = 0; i < count; i++) {
+            rabbitMqProducer.sendMessageConfigured(MESSAGE_TEMPLATE + i);
+        }
+    }
 }

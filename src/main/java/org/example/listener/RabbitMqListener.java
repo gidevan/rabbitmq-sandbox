@@ -2,12 +2,14 @@ package org.example.listener;
 
 import lombok.extern.apachecommons.CommonsLog;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Random;
 
 @Component
@@ -32,6 +34,14 @@ public class RabbitMqListener {
     public void receive(String message) {
         log.info("Application [{}] receives message:  [{}]", applicationId, message);
         processMessage(message);
+    }
+
+    @RabbitListener(queues = {"simpleTtlQueue"})
+    public void receiveTtl(Message message) {
+        var body = new String(message.getBody(), StandardCharsets.UTF_8);
+        log.info("Application [{}] receives message:  [{}] from ttlQueue", applicationId, message);
+        log.info("Body: {}", body);
+        processMessage(body);
     }
 
     private void processMessage(String message) {

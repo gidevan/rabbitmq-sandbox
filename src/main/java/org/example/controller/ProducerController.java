@@ -5,6 +5,7 @@ import org.example.service.RabbitMqService;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
@@ -26,6 +27,12 @@ public class ProducerController {
     public String sendMessages(@PathVariable Integer count) {
         rabbitMqService.sendMessages(count);
         return "send: " + count + " messages at " + LocalDateTime.now();
+    }
+
+    @PostMapping("/send/configured/{count}")
+    public String sendConfiguredMessages(@PathVariable Integer count) {
+        rabbitMqService.sendConfiguredMessages(count);
+        return "send configured: " + count + " messages at " + LocalDateTime.now();
     }
 
 
