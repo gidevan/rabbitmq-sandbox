@@ -1,6 +1,7 @@
 package org.example.controller;
 
 import lombok.AllArgsConstructor;
+import org.example.service.ChainService;
 import org.example.service.RabbitMqService;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,8 @@ import java.time.LocalDateTime;
 public class ProducerController {
 
     private RabbitMqService rabbitMqService;
+
+    private ChainService chainService;
 
     @GetMapping("/send/{message}")
     public String sendMessage(@PathVariable String message) {
@@ -35,5 +38,9 @@ public class ProducerController {
         return "send configured: " + count + " messages at " + LocalDateTime.now();
     }
 
+    @GetMapping("/chain")
+    public String chainCall() {
+        return chainService.getRemoteResponse();
+    }
 
 }

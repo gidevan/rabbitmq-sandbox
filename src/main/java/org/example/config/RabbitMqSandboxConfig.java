@@ -14,15 +14,16 @@ public class RabbitMqSandboxConfig {
 
     @Bean
     public Queue queue() {
-        return new Queue(QUEUE_NAME, false);
+        return new Queue(QUEUE_NAME, true);
     }
 
     @Bean
     public Queue ttlQueue() {
-        return QueueBuilder.nonDurable(QUEUE_TTL_NAME)
-                .withArgument("x-dead-letter-exchange", "")
-                .withArgument("x-dead-letter-routing-key", QUEUE_DLQ_NAME)
-                .ttl(3000)
+        //return QueueBuilder.nonDurable(QUEUE_TTL_NAME)
+        return QueueBuilder.durable(QUEUE_TTL_NAME)
+                //.withArgument("x-dead-letter-exchange", "")
+                //.withArgument("x-dead-letter-routing-key", QUEUE_DLQ_NAME)
+                //.ttl(3000)
                 .build();
     }
 

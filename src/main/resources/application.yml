@@ -3,3 +3,17 @@ connection-type: producer
 message:
   ttl: 4000
 
+remote-url: http://localhost:8080/simple-request
+
+opentracing:
+  jaeger:
+    http-sender:
+      url: http://localhost:14268/api/traces
+
+spring:
+  application:
+    name: testSpringAppName
+
+logging:
+  level:
+    root: info

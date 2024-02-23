@@ -7,6 +7,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
@@ -14,6 +15,7 @@ import java.util.Random;
 
 @Component
 @Slf4j
+@ConditionalOnProperty(name = "connection-type", havingValue = "consumer")
 public class RabbitMqListener {
 
     private static final int MAX_PAUSE = 15;
