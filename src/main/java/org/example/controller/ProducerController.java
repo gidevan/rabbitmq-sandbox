@@ -20,7 +20,7 @@ public class ProducerController {
 
     private ChainService chainService;
 
-    @GetMapping("/send/{message}")
+    @PostMapping("/send/{message}")
     public String sendMessage(@PathVariable String message) {
         rabbitMqService.sendMessage(message);
         return "send: " + message + " at " + LocalDateTime.now();
